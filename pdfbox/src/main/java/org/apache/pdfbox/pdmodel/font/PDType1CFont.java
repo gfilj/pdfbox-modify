@@ -17,6 +17,8 @@
 
 package org.apache.pdfbox.pdmodel.font;
 
+import static org.apache.pdfbox.pdmodel.font.UniUtil.getUniNameOfCodePoint;
+
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
@@ -25,8 +27,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.fontbox.EncodedFont;
 import org.apache.fontbox.FontBoxFont;
 import org.apache.fontbox.cff.CFFParser;
@@ -42,9 +43,6 @@ import org.apache.pdfbox.pdmodel.font.encoding.StandardEncoding;
 import org.apache.pdfbox.pdmodel.font.encoding.Type1Encoding;
 import org.apache.pdfbox.util.Matrix;
 
-
-import static org.apache.pdfbox.pdmodel.font.UniUtil.getUniNameOfCodePoint;
-
 /**
  * Type 1-equivalent CFF font.
  *
@@ -53,7 +51,6 @@ import static org.apache.pdfbox.pdmodel.font.UniUtil.getUniNameOfCodePoint;
  */
 public class PDType1CFont extends PDSimpleFont implements PDVectorFont
 {
-    private static final Log LOG = LogFactory.getLog(PDType1CFont.class);
 
     private final Map<String, Float> glyphHeights = new HashMap<>();
     private final AffineTransform fontMatrixTransform;
@@ -85,7 +82,6 @@ public class PDType1CFont extends PDSimpleFont implements PDVectorFont
                 bytes = IOUtils.toByteArray(ff3Stream.createInputStream());
                 if (bytes.length == 0)
                 {
-                    LOG.error("Invalid data for embedded Type1C font " + getName());
                     bytes = null;
                 }
             }
@@ -104,7 +100,6 @@ public class PDType1CFont extends PDSimpleFont implements PDVectorFont
         }
         catch (IOException e)
         {
-            LOG.error("Can't read the embedded Type1C font " + getName(), e);
             fontIsDamaged = true;
         }
         isDamaged = fontIsDamaged;
@@ -123,7 +118,6 @@ public class PDType1CFont extends PDSimpleFont implements PDVectorFont
             
             if (mapping.isFallback())
             {
-                LOG.warn("Using fallback font " + genericFont.getName() + " for " + getBaseFont());
             }
             isEmbedded = false;
         }

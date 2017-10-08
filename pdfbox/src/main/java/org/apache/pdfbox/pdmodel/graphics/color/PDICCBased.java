@@ -17,32 +17,27 @@
 package org.apache.pdfbox.pdmodel.graphics.color;
 
 import java.awt.Color;
+import java.awt.color.CMMException;
 import java.awt.color.ColorSpace;
+import java.awt.color.ICC_ColorSpace;
+import java.awt.color.ICC_Profile;
+import java.awt.color.ProfileDataException;
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.List;
+
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSFloat;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.common.COSArrayList;
 import org.apache.pdfbox.pdmodel.common.PDRange;
 import org.apache.pdfbox.pdmodel.common.PDStream;
-
-import java.awt.color.CMMException;
-import java.awt.color.ICC_ColorSpace;
-import java.awt.color.ICC_Profile;
-import java.awt.color.ProfileDataException;
-import java.awt.image.BufferedImage;
-
-import java.awt.image.WritableRaster;
-import java.io.InputStream;
-import java.io.IOException;
-
-import java.util.List;
 import org.apache.pdfbox.util.Charsets;
 
 /**
@@ -54,8 +49,7 @@ import org.apache.pdfbox.util.Charsets;
  */
 public final class PDICCBased extends PDCIEBasedColorSpace
 {
-    private static final Log LOG = LogFactory.getLog(PDICCBased.class);
-
+	public static String LOG="1";
     private final PDStream stream;
     private int numberOfComponents = -1;
     private ICC_Profile iccProfile;
@@ -168,7 +162,6 @@ public final class PDICCBased extends PDCIEBasedColorSpace
                 {
                     isRGB = true;
                 }
-                LOG.error("Can't read embedded ICC profile (" + e.getLocalizedMessage() + "), using alternate color space: " + alternateColorSpace.getName());
                 initialColor = alternateColorSpace.getInitialColor();
             }
             else

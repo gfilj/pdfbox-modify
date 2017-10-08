@@ -23,8 +23,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.pdfbox.contentstream.operator.Operator;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSString;
@@ -52,7 +51,6 @@ import org.apache.pdfbox.util.Matrix;
  */
 class AppearanceGeneratorHelper
 {
-    private static final Log LOG = LogFactory.getLog(AppearanceGeneratorHelper.class);
 
     private static final Operator BMC = Operator.getOperator("BMC");
     private static final Operator EMC = Operator.getOperator("EMC");
@@ -126,13 +124,11 @@ class AppearanceGeneratorHelper
                     {
                         if (acroFormResources.getFont(fontResourceName) == null)
                         {
-                            LOG.debug("Adding font resource " + fontResourceName + " from widget to AcroForm");
                             acroFormResources.put(fontResourceName, widgetResources.getFont(fontResourceName));
                         }
                     }
                     catch (IOException e)
                     {
-                        LOG.warn("Unable to match field level font with AcroForm font");
                     }
                 }
             }
@@ -176,7 +172,6 @@ class AppearanceGeneratorHelper
             if (rect == null)
             {
                 widget.getCOSObject().removeItem(COSName.AP);
-                LOG.warn("widget of field " + field.getFullyQualifiedName() + " has no rectangle, no appearance stream created");
                 continue;
             }
 

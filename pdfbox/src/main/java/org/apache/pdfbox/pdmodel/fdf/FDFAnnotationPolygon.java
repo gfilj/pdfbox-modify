@@ -23,8 +23,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
@@ -38,7 +36,6 @@ import org.w3c.dom.Element;
  */
 public class FDFAnnotationPolygon extends FDFAnnotation
 {
-    private static final Log LOG = LogFactory.getLog(FDFAnnotationPolygon.class);
     /**
      * COS Model value for SubType entry.
      */
@@ -104,7 +101,6 @@ public class FDFAnnotationPolygon extends FDFAnnotation
         }
         catch (XPathExpressionException e)
         {
-            LOG.debug("Error while evaluating XPath expression for polygon vertices");
         }
     }
 

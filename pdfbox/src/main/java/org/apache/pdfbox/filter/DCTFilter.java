@@ -31,8 +31,6 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageInputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -45,7 +43,6 @@ import org.w3c.dom.NodeList;
  */
 final class DCTFilter extends Filter
 {
-    private static final Log LOG = LogFactory.getLog(DCTFilter.class);
 
     private static final int POS_TRANSFORM = 11;
     private static final String ADOBE = "Adobe";
@@ -121,7 +118,6 @@ final class DCTFilter extends Filter
                         break;
                     case 1:
                         // TODO YCbCr
-                        LOG.warn("YCbCr JPEGs not implemented");
                         break;
                     case 2:
                         raster = fromYCCKtoCMYK(raster);

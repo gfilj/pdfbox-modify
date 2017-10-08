@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.fontbox.FontBoxFont;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
@@ -41,7 +40,6 @@ import org.apache.pdfbox.pdmodel.font.encoding.WinAnsiEncoding;
  */
 public abstract class PDSimpleFont extends PDFont
 {
-    private static final Log LOG = LogFactory.getLog(PDSimpleFont.class);
 
     protected Encoding encoding;
     protected GlyphList glyphList;
@@ -101,7 +99,6 @@ public abstract class PDSimpleFont extends PDFont
                 this.encoding = Encoding.getInstance(encodingName);
                 if (this.encoding == null)
                 {
-                    LOG.warn("Unknown encoding: " + encodingName.getName());
                     this.encoding = readEncodingFromFont(); // fallback
                 }
             }
@@ -316,21 +313,6 @@ public abstract class PDSimpleFont extends PDFont
         }
 
         // if no value has been produced, there is no way to obtain Unicode for the character.
-        if (LOG.isWarnEnabled() && !noUnicode.contains(code))
-        {
-            // we keep track of which warnings have been issued, so we don't log multiple times
-            noUnicode.add(code);
-            if (name != null)
-            {
-                LOG.warn("No Unicode mapping for " + name + " (" + code + ") in font " +
-                        getName());
-            }
-            else
-            {
-                LOG.warn("No Unicode mapping for character code " + code + " in font " +
-                        getName());
-            }
-        }
 
         return null;
     }

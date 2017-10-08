@@ -23,8 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
@@ -40,7 +38,6 @@ import org.apache.pdfbox.cos.COSName;
  */
 public class PDNumberTreeNode implements COSObjectable
 {
-    private static final Log LOG = LogFactory.getLog( PDNumberTreeNode.class );
 
     private final COSDictionary node;
     private Class<? extends COSObjectable> valueType = null;
@@ -157,7 +154,6 @@ public class PDNumberTreeNode implements COSObjectable
         }
         else
         {
-            LOG.warn("NumberTreeNode does not have \"nums\" nor \"kids\" objects.");
         }
         return retval;
     }

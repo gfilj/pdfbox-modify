@@ -37,8 +37,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageTree;
@@ -67,45 +65,10 @@ public class PDFTextStripper extends LegacyPDFStreamEngine
     // with -D system properties:
     // pdftextstripper.indent
     // pdftextstripper.drop
-    static
-    {
-        String strDrop = null, strIndent = null;
-        try
-        {
-            String className = PDFTextStripper.class.getSimpleName().toLowerCase();
-            String prop = className + ".indent";
-            strIndent = System.getProperty(prop);
-            prop = className + ".drop";
-            strDrop = System.getProperty(prop);
-        }
-        catch (SecurityException e)
-        {
-            // PDFBOX-1946 when run in an applet
-            // ignore and use default
-        }
-        if (strIndent != null && strIndent.length() > 0)
-        {
-            try
-            {
-                defaultIndentThreshold = Float.parseFloat(strIndent);
-            }
-            catch (NumberFormatException nfe)
-            {
-                // ignore and use default
-            }
-        }
-        if (strDrop != null && strDrop.length() > 0)
-        {
-            try
-            {
-                defaultDropThreshold = Float.parseFloat(strDrop);
-            }
-            catch (NumberFormatException nfe)
-            {
-                // ignore and use default
-            }
-        }
-    }
+//    static
+//    {
+//       
+//    }
 
     /**
      * The platform's line separator.
@@ -178,6 +141,42 @@ public class PDFTextStripper extends LegacyPDFStreamEngine
      */
     public PDFTextStripper() throws IOException
     {
+    	 String strDrop = null, strIndent = null;
+         try
+         {
+             String className = PDFTextStripper.class.getSimpleName().toLowerCase();
+             String prop = className + ".indent";
+             strIndent = System.getProperty(prop);
+             prop = className + ".drop";
+             strDrop = System.getProperty(prop);
+         }
+         catch (SecurityException e)
+         {
+             // PDFBOX-1946 when run in an applet
+             // ignore and use default
+         }
+         if (strIndent != null && strIndent.length() > 0)
+         {
+             try
+             {
+                 defaultIndentThreshold = Float.parseFloat(strIndent);
+             }
+             catch (NumberFormatException nfe)
+             {
+                 // ignore and use default
+             }
+         }
+         if (strDrop != null && strDrop.length() > 0)
+         {
+             try
+             {
+                 defaultDropThreshold = Float.parseFloat(strDrop);
+             }
+             catch (NumberFormatException nfe)
+             {
+                 // ignore and use default
+             }
+         }
     }
 
     /**

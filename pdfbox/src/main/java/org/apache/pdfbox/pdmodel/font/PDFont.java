@@ -25,8 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.fontbox.afm.FontMetrics;
 import org.apache.fontbox.cmap.CMap;
 import org.apache.fontbox.util.BoundingBox;
@@ -50,7 +49,6 @@ import org.apache.pdfbox.util.Vector;
  */
 public abstract class PDFont implements COSObjectable, PDFontLike
 {
-    private static final Log LOG = LogFactory.getLog(PDFont.class);
     protected static final Matrix DEFAULT_FONT_MATRIX = new Matrix(0.001f, 0, 0, 0.001f, 0, 0);
 
     protected final COSDictionary dict;
@@ -137,12 +135,10 @@ public abstract class PDFont implements COSObjectable, PDFontLike
                 cmap = readCMap(toUnicode);
                 if (cmap != null && !cmap.hasUnicodeMappings())
                 {
-                    LOG.warn("Invalid ToUnicode CMap in font " + getName());
                 }
             }
             catch (IOException ex)
             {
-                LOG.error("Could not read ToUnicode CMap in font " + getName(), ex);
             }
             toUnicodeCMap = cmap;
         }
@@ -555,7 +551,6 @@ public abstract class PDFont implements COSObjectable, PDFontLike
             }
             catch (Exception e)
             {
-                LOG.error("Can't determine the width of the space character, assuming 250", e);
                 fontWidthOfSpace = 250f;
             }
         }

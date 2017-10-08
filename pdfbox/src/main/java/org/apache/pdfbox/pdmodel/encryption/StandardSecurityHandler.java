@@ -26,12 +26,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
- 
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSName;
@@ -51,7 +49,6 @@ public final class StandardSecurityHandler extends SecurityHandler
     /**
      * Log instance.
      */
-    private static final Log LOG = LogFactory.getLog(StandardSecurityHandler.class);
 
     /** Type of security handler. */
     public static final String FILTER = "Standard";
@@ -309,7 +306,6 @@ public final class StandardSecurityHandler extends SecurityHandler
             // "Verify that bytes 9-11 of the result are the characters ‘a’, ‘d’, ‘b’."
             if (perms[9] != 'a' || perms[10] != 'd' || perms[11] != 'b')
             {
-                LOG.warn("Verification of permissions failed (constant)");
             }
             
             // "Bytes 0-3 of the decrypted Perms entry, treated as a little-endian integer, 
@@ -319,13 +315,10 @@ public final class StandardSecurityHandler extends SecurityHandler
             
             if (permsP != dicPermissions)
             {
-                LOG.warn("Verification of permissions failed (" + String.format("%08X",permsP) +
-                        " != " + String.format("%08X",dicPermissions) + ")");
             }
             
             if (encryptMetadata && perms[8] != 'T' || !encryptMetadata && perms[8] != 'F')
             {
-                LOG.warn("Verification of permissions failed (EncryptMetadata)");
             }
         }
         catch (GeneralSecurityException e)
@@ -1189,7 +1182,6 @@ public final class StandardSecurityHandler extends SecurityHandler
         {
             if (Cipher.getMaxAllowedKeyLength("AES") != Integer.MAX_VALUE)
             {
-                LOG.warn("JCE unlimited strength jurisdiction policy files are not installed");
             }
         }
         catch (NoSuchAlgorithmException ex)

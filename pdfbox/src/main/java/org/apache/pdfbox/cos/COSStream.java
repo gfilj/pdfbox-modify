@@ -24,8 +24,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.pdfbox.filter.Filter;
 import org.apache.pdfbox.filter.FilterFactory;
 import org.apache.pdfbox.io.IOUtils;
@@ -45,7 +44,6 @@ public class COSStream extends COSDictionary implements Closeable
     private final ScratchFile scratchFile;  // used as a temp buffer during decoding
     private boolean isWriting;              // true if there's an open OutputStream
     
-    private static final Log LOG = LogFactory.getLog(COSStream.class);
     
     /**
      * Creates a new stream with an empty dictionary.
@@ -110,11 +108,6 @@ public class COSStream extends COSDictionary implements Closeable
     {
         if (randomAccess == null)
         {
-            if (forInputStream && LOG.isDebugEnabled())
-            {
-                // no data written to stream - maybe this should be an exception
-                LOG.debug("Create InputStream called without data being written before to stream.");
-            }
             randomAccess = scratchFile.createBuffer();
         }
     }

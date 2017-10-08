@@ -16,6 +16,8 @@
  */
 package org.apache.pdfbox.pdmodel.font;
 
+import static org.apache.pdfbox.pdmodel.font.UniUtil.getUniNameOfCodePoint;
+
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.io.File;
@@ -23,8 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.fontbox.FontBoxFont;
 import org.apache.fontbox.ttf.CmapSubtable;
 import org.apache.fontbox.ttf.CmapTable;
@@ -46,9 +47,6 @@ import org.apache.pdfbox.pdmodel.font.encoding.StandardEncoding;
 import org.apache.pdfbox.pdmodel.font.encoding.Type1Encoding;
 import org.apache.pdfbox.pdmodel.font.encoding.WinAnsiEncoding;
 
-
-import static org.apache.pdfbox.pdmodel.font.UniUtil.getUniNameOfCodePoint;
-
 /**
  * TrueType font.
  * 
@@ -56,7 +54,6 @@ import static org.apache.pdfbox.pdmodel.font.UniUtil.getUniNameOfCodePoint;
  */
 public class PDTrueTypeFont extends PDSimpleFont implements PDVectorFont
 {
-    private static final Log LOG = LogFactory.getLog(PDTrueTypeFont.class);
 
     private static final int START_RANGE_F000 = 0xF000;
     private static final int START_RANGE_F100 = 0xF100;
@@ -111,7 +108,6 @@ public class PDTrueTypeFont extends PDSimpleFont implements PDVectorFont
                 catch (NullPointerException | IOException e)
                 {
                     // NPE due to TTF parser being buggy
-                    LOG.warn("Could not read embedded TTF for font " + getBaseFont(), e);
                     fontIsDamaged = true;
                 }
             }
@@ -129,7 +125,6 @@ public class PDTrueTypeFont extends PDSimpleFont implements PDVectorFont
 
             if (mapping.isFallback())
             {
-                LOG.warn("Using fallback font '" + ttfFont + "' for '" + getBaseFont() + "'");
             }
         }
         ttf = ttfFont;

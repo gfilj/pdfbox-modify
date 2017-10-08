@@ -22,8 +22,7 @@ import java.awt.image.ColorModel;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.util.Matrix;
 
@@ -34,7 +33,6 @@ import org.apache.pdfbox.util.Matrix;
  */
 class Type1ShadingContext extends ShadingContext implements PaintContext
 {
-    private static final Log LOG = LogFactory.getLog(Type1ShadingContext.class);
 
     private PDShadingType1 type1ShadingType;
     private AffineTransform rat;
@@ -77,7 +75,6 @@ class Type1ShadingContext extends ShadingContext implements PaintContext
         }
         catch (NoninvertibleTransformException ex)
         {
-            LOG.error(ex.getMessage() + ", matrix: " + matrix, ex);
             rat = new AffineTransform();
         }
     }
@@ -132,7 +129,6 @@ class Type1ShadingContext extends ShadingContext implements PaintContext
                     }
                     catch (IOException e)
                     {
-                        LOG.error("error while processing a function", e);
                     }
                 }
 
@@ -146,7 +142,6 @@ class Type1ShadingContext extends ShadingContext implements PaintContext
                     }
                     catch (IOException e)
                     {
-                        LOG.error("error processing color space", e);
                     }
                 }
                 data[index] = (int) (values[0] * 255);

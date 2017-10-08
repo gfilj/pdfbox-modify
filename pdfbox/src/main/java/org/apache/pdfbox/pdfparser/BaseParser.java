@@ -16,13 +16,14 @@
  */
 package org.apache.pdfbox.pdfparser;
 
+import static org.apache.pdfbox.util.Charsets.ISO_8859_1;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.CharsetDecoder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSBoolean;
@@ -36,9 +37,6 @@ import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.cos.COSObjectKey;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.util.Charsets;
-
-
-import static org.apache.pdfbox.util.Charsets.ISO_8859_1;
 
 /**
  * This class is used to contain parsing logic that will be used by both the
@@ -57,7 +55,6 @@ public abstract class BaseParser
     /**
      * Log instance.
      */
-    private static final Log LOG = LogFactory.getLog(BaseParser.class);
 
     protected static final int E = 'e';
     protected static final int N = 'n';
@@ -214,7 +211,6 @@ public abstract class BaseParser
             else
             {
                 // invalid dictionary, we were expecting a /Name, read until the end or until we can recover
-                LOG.warn("Invalid dictionary, found: '" + c + "' but expected: '/' at offset " + seqSource.getPosition());
                 if (readUntilEndOfCOSDictionary())
                 {
                     // we couldn't recover
@@ -295,7 +291,6 @@ public abstract class BaseParser
 
         if (value == null)
         {
-            LOG.warn("Bad Dictionary Declaration " + seqSource);
         }
         else
         {
@@ -659,7 +654,6 @@ public abstract class BaseParser
             else
             {
                 //it could be a bad object in the array which is just skipped
-                LOG.warn("Corrupt object reference at offset " + seqSource.getPosition());
 
                 // This could also be an "endobj" or "endstream" which means we can assume that
                 // the array has ended.
@@ -733,7 +727,6 @@ public abstract class BaseParser
                     // check for premature EOF
                     if (ch2 == -1 || ch1 == -1)
                     {
-                        LOG.error("Premature EOF in BaseParser#parseCOSName");
                         c = -1;
                         break;
                     }

@@ -24,8 +24,7 @@ import java.io.OutputStream;
 import java.util.zip.DataFormatException;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.Inflater;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 
@@ -38,7 +37,6 @@ import org.apache.pdfbox.cos.COSName;
  */
 final class FlateFilter extends Filter
 {
-    private static final Log LOG = LogFactory.getLog(FlateFilter.class);
     private static final int BUFFER_SIZE = 16348;
 
     @Override
@@ -76,7 +74,6 @@ final class FlateFilter extends Filter
         catch (DataFormatException e)
         {
             // if the stream is corrupt a DataFormatException may occur
-            LOG.error("FlateFilter: stop reading corrupt stream due to a DataFormatException");
 
             // re-throw the exception
             throw new IOException(e);
@@ -111,7 +108,6 @@ final class FlateFilter extends Filter
                     if (dataWritten)
                     {
                         // some data could be read -> don't throw an exception
-                        LOG.warn("FlateFilter: premature end of stream due to a DataFormatException");
                         break;
                     }
                     else

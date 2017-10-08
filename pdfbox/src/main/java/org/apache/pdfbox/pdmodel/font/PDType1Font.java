@@ -16,6 +16,8 @@
  */
 package org.apache.pdfbox.pdmodel.font;
 
+import static org.apache.pdfbox.pdmodel.font.UniUtil.getUniNameOfCodePoint;
+
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
@@ -26,8 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.fontbox.EncodedFont;
 import org.apache.fontbox.FontBoxFont;
 import org.apache.fontbox.type1.DamagedFontException;
@@ -41,14 +42,11 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.font.encoding.Encoding;
 import org.apache.pdfbox.pdmodel.font.encoding.StandardEncoding;
+import org.apache.pdfbox.pdmodel.font.encoding.SymbolEncoding;
 import org.apache.pdfbox.pdmodel.font.encoding.Type1Encoding;
 import org.apache.pdfbox.pdmodel.font.encoding.WinAnsiEncoding;
 import org.apache.pdfbox.pdmodel.font.encoding.ZapfDingbatsEncoding;
 import org.apache.pdfbox.util.Matrix;
-
-
-import static org.apache.pdfbox.pdmodel.font.UniUtil.getUniNameOfCodePoint;
-import org.apache.pdfbox.pdmodel.font.encoding.SymbolEncoding;
 
 /**
  * A PostScript Type 1 Font.
@@ -57,7 +55,6 @@ import org.apache.pdfbox.pdmodel.font.encoding.SymbolEncoding;
  */
 public class PDType1Font extends PDSimpleFont implements PDVectorFont
 {
-    private static final Log LOG = LogFactory.getLog(PDType1Font.class);
 
     // todo: replace with enum? or getters?
     public static final PDType1Font TIMES_ROMAN = new PDType1Font("Times-Roman");
@@ -158,7 +155,6 @@ public class PDType1Font extends PDSimpleFont implements PDVectorFont
             {
                 fontName = "?";
             }
-            LOG.warn("Using fallback font " + fontName + " for base font " + getBaseFont());
         }
         isEmbedded = false;
         isDamaged = false;
@@ -265,12 +261,10 @@ public class PDType1Font extends PDSimpleFont implements PDVectorFont
                 }
                 catch (DamagedFontException e)
                 {
-                    LOG.warn("Can't read damaged embedded Type1 font " + fd.getFontName());
                     fontIsDamaged = true;
                 }
                 catch (IOException e)
                 {
-                    LOG.error("Can't read the embedded Type1 font " + fd.getFontName(), e);
                     fontIsDamaged = true;
                 }
             }
@@ -292,7 +286,6 @@ public class PDType1Font extends PDSimpleFont implements PDVectorFont
             
             if (mapping.isFallback())
             {
-                LOG.warn("Using fallback font " + genericFont.getName() + " for " + getBaseFont());
             }
         }
         readEncoding();
@@ -326,10 +319,6 @@ public class PDType1Font extends PDSimpleFont implements PDVectorFont
 
         if (length1 - offset != 0 && offset > 0)
         {
-            if (LOG.isWarnEnabled())
-            {
-                LOG.warn("Ignored invalid Length1 " + length1 + " for Type 1 font " + getName());
-            }
             return offset;
         }
 
@@ -376,7 +365,6 @@ public class PDType1Font extends PDSimpleFont implements PDVectorFont
         // repair Length2 if necessary
         if (length2 < 0 || length2 > bytes.length - length1)
         {
-            LOG.warn("Ignored invalid Length2 " + length2 + " for Type 1 font " + getName());
             return bytes.length - length1;
         }
         return length2;

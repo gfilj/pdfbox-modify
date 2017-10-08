@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
@@ -52,7 +50,6 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDSignatureField;
 public class PDVisibleSigBuilder implements PDFTemplateBuilder
 {
     private final PDFTemplateStructure pdfStructure;
-    private static final Log LOG = LogFactory.getLog(PDVisibleSigBuilder.class);
 
     /**
      * Constructor, creates PDF template structure.
@@ -60,7 +57,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
     public PDVisibleSigBuilder()
     {
         pdfStructure = new PDFTemplateStructure();
-        LOG.info("PDF Structure has been created");
     }
 
     @Override
@@ -69,7 +65,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         PDPage page = new PDPage(new PDRectangle(properties.getPageWidth(),
                                                  properties.getPageHeight()));
         pdfStructure.setPage(page);
-        LOG.info("PDF page has been created");
     }
 
     /**
@@ -93,7 +88,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         PDAcroForm theAcroForm = new PDAcroForm(template);
         template.getDocumentCatalog().setAcroForm(theAcroForm);
         pdfStructure.setAcroForm(theAcroForm);
-        LOG.info("AcroForm has been created");
     }
 
     @Override
@@ -107,7 +101,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
     {
         PDSignatureField sf = new PDSignatureField(acroForm);
         pdfStructure.setSignatureField(sf);
-        LOG.info("Signature field has been created");
     }
 
     @Override
@@ -124,7 +117,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
             pdSignature.setName(signerName);
         }
         pdfStructure.setPdSignature(pdSignature);
-        LOG.info("PDSignature has been created");
     }
 
     @Override
@@ -141,7 +133,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         acroForm.setDefaultAppearance("/sylfaen 0 Tf 0 g");
         pdfStructure.setAcroFormFields(acroFormFields);
         pdfStructure.setAcroFormDictionary(acroFormDict);
-        LOG.info("AcroForm dictionary has been created");
     }
 
     @Override
@@ -157,7 +148,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         rect.setLowerLeftX(properties.getxAxis());
         signatureField.getWidgets().get(0).setRectangle(rect);
         pdfStructure.setSignatureRectangle(rect);
-        LOG.info("Signature rectangle has been created");
     }
 
     /**
@@ -172,14 +162,12 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         AffineTransform transform = new AffineTransform(params[0], params[1], params[2],
                                                         params[3], params[4],  params[5]);
         pdfStructure.setAffineTransform(transform);
-        LOG.info("Matrix has been added");
     }
 
     @Override
     public void createAffineTransform(AffineTransform affineTransform)
     {
         pdfStructure.setAffineTransform(affineTransform);
-        LOG.info("Matrix has been added");
     }
 
     @Override
@@ -192,14 +180,12 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         procSetArr.add(COSName.getPDFName("ImageC"));
         procSetArr.add(COSName.getPDFName("ImageI"));
         pdfStructure.setProcSet(procSetArr);
-        LOG.info("ProcSet array has been created");
     }
 
     @Override
     public void createSignatureImage(PDDocument template, BufferedImage image) throws IOException
     {
         pdfStructure.setImage(LosslessFactory.createFromImage(template, image));
-        LOG.info("Visible Signature Image has been created");
     }
 
     @Override
@@ -212,7 +198,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         formatterRectangle.setLowerLeftY(params[3]);
 
         pdfStructure.setFormatterRectangle(formatterRectangle);
-        LOG.info("Formatter rectangle has been created");
     }
 
     @Override
@@ -220,7 +205,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
     {
         PDStream holderForm = new PDStream(template);
         pdfStructure.setHolderFormStream(holderForm);
-        LOG.info("Holder form stream has been created");
     }
 
     @Override
@@ -228,7 +212,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
     {
         PDResources holderFormResources = new PDResources();
         pdfStructure.setHolderFormResources(holderFormResources);
-        LOG.info("Holder form resources have been created");
 
     }
 
@@ -241,7 +224,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         holderForm.setBBox(formrect);
         holderForm.setFormType(1);
         pdfStructure.setHolderForm(holderForm);
-        LOG.info("Holder form has been created");
 
     }
 
@@ -258,7 +240,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         signatureField.getWidgets().get(0).setAppearance(appearance);
 
         pdfStructure.setAppearanceDictionary(appearance);
-        LOG.info("PDF appearance dictionary has been created");
     }
 
     @Override
@@ -266,8 +247,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
     {
         PDStream innerFormStream = new PDStream(template);
         pdfStructure.setInnterFormStream(innerFormStream);
-        LOG.info("Stream of another form (inner form - it will be inside holder form) " +
-                 "has been created");
     }
 
     @Override
@@ -275,8 +254,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
     {
         PDResources innerFormResources = new PDResources();
         pdfStructure.setInnerFormResources(innerFormResources);
-        LOG.info("Resources of another form (inner form - it will be inside holder form)" +
-                 "have been created");
     }
 
     @Override
@@ -288,7 +265,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         innerForm.setBBox(formrect);
         innerForm.setFormType(1);
         pdfStructure.setInnerForm(innerForm);
-        LOG.info("Another form (inner form - it will be inside holder form) has been created");
     }
 
     @Override
@@ -297,7 +273,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
     {
         holderFormResources.put(COSName.FRM, innerForm);
         pdfStructure.setInnerFormName(COSName.FRM);
-        LOG.info("Now inserted inner form inside holder form");
     }
 
     @Override
@@ -305,7 +280,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
     {
         PDStream imageFormStream = new PDStream(template);
         pdfStructure.setImageFormStream(imageFormStream);
-        LOG.info("Created image form stream");
     }
 
     @Override
@@ -313,7 +287,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
     {
         PDResources imageFormResources = new PDResources();
         pdfStructure.setImageFormResources(imageFormResources);
-        LOG.info("Created image form resources");
     }
 
     @Override
@@ -335,7 +308,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         pdfStructure.setImageForm(imageForm);
         pdfStructure.setImageFormName(imageFormName);
         pdfStructure.setImageName(imageName);
-        LOG.info("Created image form");
     }
 
     @Override
@@ -348,7 +320,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         n0Form.setResources(new PDResources());
         n0Form.setFormType(1);
         innerFormResource.put(COSName.getPDFName("n0"), n0Form);
-        LOG.info("Created background layer form");
     }
 
     @Override
@@ -361,7 +332,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         innerFormResources.getCOSObject().setItem(COSName.PROC_SET, procSet);
         imageFormResources.getCOSObject().setItem(COSName.PROC_SET, procSet);
         holderFormResources.getCOSObject().setItem(COSName.PROC_SET, procSet);
-        LOG.info("Inserted ProcSet to PDF");
     }
 
     @Override
@@ -381,7 +351,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         appendRawCommands(pdfStructure.getHolderFormStream().createOutputStream(), holderFormContent);
         appendRawCommands(pdfStructure.getInnerFormStream().createOutputStream(), innerFormContent);
         appendRawCommands(pdfStructure.getImageFormStream().createOutputStream(), imgFormContent);
-        LOG.info("Injected appearance stream to pdf");
     }
 
     public void appendRawCommands(OutputStream os, String commands) throws IOException
@@ -394,7 +363,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
     public void createVisualSignature(PDDocument template)
     {
         pdfStructure.setVisualSignature(template.getDocument());
-        LOG.info("Visible signature has been created");
     }
 
     @Override
@@ -406,7 +374,6 @@ public class PDVisibleSigBuilder implements PDFTemplateBuilder
         widgetDict.setItem(COSName.DR, holderFormResources.getCOSObject());
 
         pdfStructure.setWidgetDictionary(widgetDict);
-        LOG.info("WidgetDictionary has been created");
     }
 
     @Override

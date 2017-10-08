@@ -17,8 +17,6 @@
 package org.apache.pdfbox.text;
 
 import java.io.InputStream;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.contentstream.PDFStreamEngine;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.font.encoding.GlyphList;
@@ -72,9 +70,8 @@ import org.apache.pdfbox.pdmodel.font.PDFontDescriptor;
  * DO NOT USE THIS CODE UNLESS YOU ARE WORKING WITH PDFTextStripper.
  * THIS CODE IS DELIBERATELY INCORRECT, USE PDFStreamEngine INSTEAD.
  */
-class LegacyPDFStreamEngine extends PDFStreamEngine
+public class LegacyPDFStreamEngine extends PDFStreamEngine
 {
-    private static final Log LOG = LogFactory.getLog(LegacyPDFStreamEngine.class);
 
     private int pageRotation;
     private PDRectangle pageSize;
@@ -84,7 +81,7 @@ class LegacyPDFStreamEngine extends PDFStreamEngine
     /**
      * Constructor.
      */
-    LegacyPDFStreamEngine() throws IOException
+    public LegacyPDFStreamEngine() throws IOException
     {
         addOperator(new BeginText());
         addOperator(new Concatenate());
@@ -266,7 +263,6 @@ class LegacyPDFStreamEngine extends PDFStreamEngine
         }
         catch (Throwable exception)
         {
-            LOG.warn(exception, exception);
         }
 
         if (spaceWidthText == 0)

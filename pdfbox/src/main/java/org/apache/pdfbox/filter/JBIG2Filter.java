@@ -24,11 +24,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.SequenceInputStream;
+
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
@@ -46,7 +46,6 @@ import org.apache.pdfbox.cos.COSStream;
  */
 final class JBIG2Filter extends Filter
 {
-    private static final Log LOG = LogFactory.getLog(JBIG2Filter.class);
 
     @Override
     public DecodeResult decode(InputStream encoded, OutputStream decoded,
@@ -90,7 +89,6 @@ final class JBIG2Filter extends Filter
             {
                 if (bits != 1)
                 {
-                    LOG.warn("Attempting to handle a JBIG2 with more than 1-bit depth");
                 }
                 BufferedImage packedImage = new BufferedImage(image.getWidth(), image.getHeight(),
                         BufferedImage.TYPE_BYTE_BINARY);

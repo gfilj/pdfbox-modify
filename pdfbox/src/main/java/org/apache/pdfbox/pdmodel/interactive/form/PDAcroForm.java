@@ -24,8 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
@@ -58,7 +56,6 @@ import org.apache.pdfbox.util.Matrix;
  */
 public final class PDAcroForm implements COSObjectable
 {
-    private static final Log LOG = LogFactory.getLog(PDAcroForm.class);
         
     private static final int FLAG_SIGNATURES_EXIST = 1;
     private static final int FLAG_APPEND_ONLY = 1 << 1;
@@ -222,7 +219,6 @@ public final class PDAcroForm implements COSObjectable
         // from the XFA content into a static PDF.
         if (xfaIsDynamic())
         {
-            LOG.warn("Flatten for a dynamix XFA form is not supported");
             return;
         }
         
@@ -254,7 +250,6 @@ public final class PDAcroForm implements COSObjectable
         // from the XFA content into a static PDF.
         if (xfaIsDynamic())
         {
-            LOG.warn("Flatten for a dynamix XFA form is not supported");
             return;
         }
         

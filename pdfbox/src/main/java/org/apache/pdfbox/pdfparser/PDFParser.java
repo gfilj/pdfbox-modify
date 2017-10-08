@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSDocument;
@@ -41,7 +39,6 @@ import org.apache.pdfbox.pdmodel.encryption.StandardDecryptionMaterial;
 
 public class PDFParser extends COSParser
 {
-    private static final Log LOG = LogFactory.getLog(PDFParser.class);
 
     private String password = "";
     private InputStream keyStoreInputStream = null;
@@ -154,8 +151,6 @@ public class PDFParser extends COSParser
             }
             catch (NumberFormatException nfe)
             {
-                LOG.warn("System property " + SYSPROP_EOFLOOKUPRANGE
-                        + " does not contain an integer value, but: '" + eofLookupRangeStr + "'");
             }
         }
         document = new COSDocument(scratchFile);

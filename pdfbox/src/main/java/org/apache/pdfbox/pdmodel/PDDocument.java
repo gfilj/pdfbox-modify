@@ -33,8 +33,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
@@ -92,7 +91,6 @@ public class PDDocument implements Closeable
      */
     private static final int[] RESERVE_BYTE_RANGE = new int[] { 0, 1000000000, 1000000000, 1000000000 };
 
-    private static final Log LOG = LogFactory.getLog(PDDocument.class);
 
     /**
      * avoid concurrency issues with PDDeviceRGB and deadlock in COSNumber/COSInteger
@@ -106,7 +104,6 @@ public class PDDocument implements Closeable
         }
         catch (IOException ex)
         {
-            LOG.debug("voodoo error", ex);
         }
 
         try
@@ -180,8 +177,6 @@ public class PDDocument implements Closeable
         }
         catch (IOException ioe)
         {
-            LOG.warn("Error initializing scratch file: " + ioe.getMessage() +
-                     ". Fall back to main memory usage only.");
             try
             {
                 scratchFile = new ScratchFile(MemoryUsageSetting.setupMainMemoryOnly());
@@ -687,8 +682,6 @@ public class PDDocument implements Closeable
         importedPage.setRotation(page.getRotation());
         if (page.getResources() != null && !page.getCOSObject().containsKey(COSName.RESOURCES))
         {
-            LOG.warn("inherited resources of source document are not imported to destination page");
-            LOG.warn("call importedPage.setResources(page.getResources()) to do this");
         }
         return importedPage;
     }
@@ -1425,8 +1418,6 @@ public class PDDocument implements Closeable
     {
         if (isAllSecurityToBeRemoved())
         {
-            LOG.warn("do not call setAllSecurityToBeRemoved(true) before calling protect(), "
-                    + "as protect() implies setAllSecurityToBeRemoved(false)");
             setAllSecurityToBeRemoved(false);
         }
         
@@ -1522,7 +1513,6 @@ public class PDDocument implements Closeable
                 }
                 catch(NumberFormatException exception)
                 {
-                    LOG.error("Can't extract the version number of the document catalog.", exception);
                 }
             }
             // the most recent version is the correct one
@@ -1551,7 +1541,6 @@ public class PDDocument implements Closeable
         // the version can't be downgraded
         if (newVersion < currentVersion)
         {
-            LOG.error("It's not allowed to downgrade the version of a pdf.");
             return;
         }
         // update the catalog version if the document version is >= 1.4

@@ -26,10 +26,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.MemoryCacheImageInputStream;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.common.PDRange;
@@ -43,7 +43,6 @@ import org.apache.pdfbox.util.Matrix;
  */
 abstract class PatchMeshesShadingContext extends TriangleBasedShadingContext
 {
-    private static final Log LOG = LogFactory.getLog(PatchMeshesShadingContext.class);
 
     /**
      * patch list
@@ -114,7 +113,6 @@ abstract class PatchMeshesShadingContext extends TriangleBasedShadingContext
             }
             catch (EOFException ex)
             {
-                LOG.error(ex);
             }
 
             boolean eof = false;
@@ -148,7 +146,6 @@ abstract class PatchMeshesShadingContext extends TriangleBasedShadingContext
                             implicitCornerColor = current.getFlag3Color();
                             break;
                         default:
-                            LOG.warn("bad flag: " + flag);
                             break;
                     }
                 }
@@ -231,7 +228,6 @@ abstract class PatchMeshesShadingContext extends TriangleBasedShadingContext
         }
         catch (EOFException ex)
         {
-            LOG.debug("EOF");
             return null;
         }
         return generatePatch(points, color);

@@ -22,8 +22,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Stack;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.pdfbox.contentstream.PDAbstractContentStream;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
@@ -38,6 +37,7 @@ import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDICCBased;
 import org.apache.pdfbox.pdmodel.graphics.color.PDPattern;
 import org.apache.pdfbox.pdmodel.graphics.color.PDSeparation;
+import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.graphics.image.PDInlineImage;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
@@ -82,7 +82,6 @@ public final class PDPageContentStream extends PDAbstractContentStream implement
         }
     }
   
-    private static final Log LOG = LogFactory.getLog(PDPageContentStream.class);
 
     private final PDDocument document;
 
@@ -239,7 +238,6 @@ public final class PDPageContentStream extends PDAbstractContentStream implement
         {
             if (sourcePage.hasContents())
             {
-                LOG.warn("You are overwriting an existing content, you should use the append mode");
             }
             PDStream contents = new PDStream(document);
             sourcePage.setContents(contents);

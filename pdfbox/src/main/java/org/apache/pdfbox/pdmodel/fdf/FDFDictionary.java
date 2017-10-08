@@ -21,15 +21,13 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.cos.COSString;
-import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.common.COSArrayList;
+import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDFileSpecification;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDSimpleFileSpecification;
 import org.w3c.dom.Element;
@@ -44,7 +42,6 @@ import org.w3c.dom.NodeList;
 public class FDFDictionary implements COSObjectable
 {
 
-    private static final Log LOG = LogFactory.getLog(FDFDictionary.class);
 
     private COSDictionary fdf;
 
@@ -98,8 +95,6 @@ public class FDFDictionary implements COSObjectable
                         }
                         catch (IOException e)
                         {
-                            LOG.warn("Error parsing ID entry for attribute 'original' [" + original +
-                                    "]. ID entry ignored.", e);
                         }
                         try
                         {
@@ -107,8 +102,6 @@ public class FDFDictionary implements COSObjectable
                         }
                         catch (IOException e)
                         {
-                            LOG.warn("Error parsing ID entry for attribute 'modified' [" + modified +
-                                    "]. ID entry ignored.", e);
                         }
                         setID(ids);
                         break;
@@ -127,8 +120,6 @@ public class FDFDictionary implements COSObjectable
                                 }
                                 catch (IOException e)
                                 {
-                                    LOG.warn("Error parsing field entry [" + currentNode.getNodeValue() +
-                                            "]. Field ignored.", e);
                                 }
                             }
                         }
@@ -201,15 +192,11 @@ public class FDFDictionary implements COSObjectable
                                             annotList.add(new FDFAnnotationUnderline(annot));
                                             break;
                                         default:
-                                            LOG.warn("Unknown or unsupported annotation type '" +
-                                                    annotationName + "'");
                                             break;
                                     }
                                 }
                                 catch (IOException e)
                                 {
-                                    LOG.warn("Error parsing annotation information [" +
-                                            annot.getNodeValue() + "]. Annotation ignored", e);
                                 }
                             }
                         }

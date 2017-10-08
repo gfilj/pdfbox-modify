@@ -18,8 +18,6 @@ package org.apache.pdfbox.pdmodel.graphics.state;
 
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
@@ -52,7 +50,6 @@ public final class PDSoftMask implements COSObjectable
             }
             else
             {
-                LOG.warn("Invalid SMask " + dictionary);
                 return null;
             }
         }
@@ -62,12 +59,10 @@ public final class PDSoftMask implements COSObjectable
         }
         else
         {
-            LOG.warn("Invalid SMask " + dictionary);
             return null;
         }
     }
 
-    private static final Log LOG = LogFactory.getLog(PDSoftMask.class);
 
     private final COSDictionary dictionary;
     private COSName subType = null;

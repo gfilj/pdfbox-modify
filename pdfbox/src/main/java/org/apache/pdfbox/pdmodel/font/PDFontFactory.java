@@ -21,8 +21,6 @@ import java.io.IOException;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * Creates the appropriate font subtype based on information in the dictionary.
@@ -30,7 +28,6 @@ import org.apache.commons.logging.LogFactory;
  */
 public final class PDFontFactory
 {
-    private static final Log LOG = LogFactory.getLog(PDFontFactory.class);
 
     private PDFontFactory()
     {
@@ -48,7 +45,6 @@ public final class PDFontFactory
         COSName type = dictionary.getCOSName(COSName.TYPE, COSName.FONT);
         if (!COSName.FONT.equals(type))
         {
-            LOG.error("Expected 'Font' dictionary but found '" + type.getName() + "'");
         }
 
         COSName subType = dictionary.getCOSName(COSName.SUBTYPE);
@@ -94,7 +90,6 @@ public final class PDFontFactory
         {
             // assuming Type 1 font (see PDFBOX-1988) because it seems that Adobe Reader does this
             // however, we may need more sophisticated logic perhaps looking at the FontFile
-            LOG.warn("Invalid font subtype '" + subType + "'");
             return new PDType1Font(dictionary);
         }
     }

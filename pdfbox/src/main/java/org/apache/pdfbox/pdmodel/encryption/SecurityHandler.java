@@ -42,8 +42,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
@@ -64,7 +62,6 @@ import org.apache.pdfbox.util.Charsets;
  */
 public abstract class SecurityHandler
 {
-    private static final Log LOG = LogFactory.getLog(SecurityHandler.class);
 
     private static final int DEFAULT_KEY_LENGTH = 40;
 
@@ -325,7 +322,6 @@ public abstract class SecurityHandler
             {
                 throw exception;
             }
-            LOG.debug("A GeneralSecurityException occured when decrypting some stream data", exception);
         }
     }
 
@@ -422,8 +418,6 @@ public abstract class SecurityHandler
             }
             if (Arrays.equals(buf, "<?xpacket ".getBytes(Charsets.ISO_8859_1)))
             {
-                LOG.warn("Metadata is not encrypted, but was expected to be");
-                LOG.warn("Read PDF specification about EncryptMetadata (default value: true)");
                 return;
             }
         }
@@ -511,8 +505,6 @@ public abstract class SecurityHandler
         }
         catch (IOException ex)
         {
-            LOG.error("Failed to decrypt COSString of length " + string.getBytes().length + 
-                    " in object " + objNum + ": " + ex.getMessage());
         }
     }
 

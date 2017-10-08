@@ -22,8 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.fontbox.cmap.CMap;
 import org.apache.fontbox.ttf.TTFParser;
 import org.apache.fontbox.ttf.TrueTypeFont;
@@ -43,7 +42,6 @@ import org.apache.pdfbox.util.Vector;
  */
 public class PDType0Font extends PDFont implements PDVectorFont
 {
-    private static final Log LOG = LogFactory.getLog(PDType0Font.class);
 
     private final PDCIDFont descendantFont;
     private final Set<Integer> noUnicode = new HashSet<>(); 
@@ -217,7 +215,6 @@ public class PDType0Font extends PDFont implements PDVectorFont
             }
             else if (!cMap.hasCIDMappings())
             {
-                LOG.warn("Invalid Encoding CMap in font " + getName());
             }
         }
         
@@ -409,14 +406,6 @@ public class PDType0Font extends PDFont implements PDVectorFont
         }
         else
         {
-            if (LOG.isWarnEnabled() && !noUnicode.contains(code))
-            {
-                // if no value has been produced, there is no way to obtain Unicode for the character.
-                String cid = "CID+" + codeToCID(code);
-                LOG.warn("No Unicode mapping for " + cid + " (" + code + ") in font " + getName());
-                // we keep track of which warnings have been issued, so we don't log multiple times
-                noUnicode.add(code);
-            }
             return null;
         }
     }

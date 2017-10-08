@@ -24,10 +24,10 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.MemoryCacheImageInputStream;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.common.PDRange;
@@ -41,7 +41,6 @@ import org.apache.pdfbox.util.Matrix;
  */
 class Type5ShadingContext extends GouraudShadingContext
 {
-    private static final Log LOG = LogFactory.getLog(Type5ShadingContext.class);
 
     /**
      * Constructor creates an instance to be used for fill operations.
@@ -57,7 +56,6 @@ class Type5ShadingContext extends GouraudShadingContext
     {
         super(shading, cm, xform, matrix);
 
-        LOG.debug("Type5ShadingContext");
 
         setTriangleList(collectTriangles(shading, xform, matrix));
         createPixelTable(deviceBounds);

@@ -28,8 +28,6 @@ import java.util.List;
 import javax.imageio.stream.MemoryCacheImageInputStream;
 import javax.imageio.stream.MemoryCacheImageOutputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 
@@ -45,7 +43,6 @@ public class LZWFilter extends Filter
     /**
      * Log instance.
      */
-    private static final Log LOG = LogFactory.getLog(LZWFilter.class);
 
     /**
      * The LZW clear table code.
@@ -152,7 +149,6 @@ public class LZWFilter extends Filter
         }
         catch (EOFException ex)
         {
-            LOG.warn("Premature EOF in LZW stream, EOD code missing");
         }
         decoded.flush();
     }

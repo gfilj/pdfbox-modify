@@ -21,8 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.pdfbox.contentstream.PDContentStream;
 import org.apache.pdfbox.contentstream.operator.Operator;
 import org.apache.pdfbox.cos.COSBase;
@@ -45,7 +44,6 @@ public class PDFStreamParser extends BaseParser
     /**
      * Log instance.
      */
-    private static final Log LOG = LogFactory.getLog(PDFStreamParser.class);
 
     private final List<Object> streamObjects = new ArrayList<>( 100 );
     
@@ -289,7 +287,6 @@ public class PDFStreamParser extends BaseParser
                         Operator imageData = (Operator) nextToken;
                         if (imageData.getImageData() == null || imageData.getImageData().length == 0)
                         {
-                            LOG.warn("empty inline image at stream offset " + seqSource.getPosition());
                         }
                         beginImageOP.setImageData(imageData.getImageData());
                     }
@@ -427,8 +424,6 @@ public class PDFStreamParser extends BaseParser
         }
         if (!noBinData)
         {
-            LOG.warn("ignoring 'EI' assumed to be in the middle of inline image at stream offset " + 
-                    pdfSource.getPosition());
         }
         return noBinData;
     }

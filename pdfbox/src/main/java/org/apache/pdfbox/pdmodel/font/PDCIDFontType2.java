@@ -22,8 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.apache.fontbox.cff.Type2CharString;
 import org.apache.fontbox.cmap.CMap;
 import org.apache.fontbox.ttf.CmapSubtable;
@@ -48,7 +47,6 @@ import org.apache.pdfbox.util.Matrix;
  */
 public class PDCIDFontType2 extends PDCIDFont
 {
-    private static final Log LOG = LogFactory.getLog(PDCIDFontType2.class);
 
     private final TrueTypeFont ttf;
     private final int[] cid2gid;
@@ -121,20 +119,16 @@ public class PDCIDFontType2 extends PDCIDFont
                     {
                         // PDFBOX-3344 contains PostScript outlines instead of TrueType
                         fontIsDamaged = true;
-                        LOG.warn("Found CFF/OTF but expected embedded TTF font " + fd.getFontName());
                     }
     
                     if (otf.hasLayoutTables())
                     {
-                        LOG.info("OpenType Layout tables used in font " + getBaseFont() +
-                                  " are not implemented in PDFBox and will be ignored");
                     }
                 }
                 catch (NullPointerException | IOException e)
                 {
                     // NPE due to TTF parser being buggy
                     fontIsDamaged = true;
-                    LOG.warn("Could not read embedded OTF for font " + getBaseFont(), e);
                 }
             }
             isEmbedded = ttfFont != null;
@@ -167,7 +161,6 @@ public class PDCIDFontType2 extends PDCIDFont
         }
         if (mapping.isFallback())
         {
-            LOG.warn("Using fallback font " + ttfFont.getName() + " for CID-keyed TrueType font " + getBaseFont());
         }
         return ttfFont;
     }
@@ -280,7 +273,6 @@ public class PDCIDFontType2 extends PDCIDFont
             if (cid2gid != null && !isDamaged)
             {
                 // Acrobat allows non-embedded GIDs - todo: can we find a test PDF for this?
-                LOG.warn("Using non-embedded GIDs in font " + getName());
                 int cid = codeToCID(code);
                 return cid2gid[cid];
             }
@@ -290,14 +282,12 @@ public class PDCIDFontType2 extends PDCIDFont
                 String unicode = parent.toUnicode(code);
                 if (unicode == null)
                 {
-                    LOG.warn("Failed to find a character mapping for " + code + " in " + getName());
                     // Acrobat is willing to use the CID as a GID, even when the font isn't embedded
                     // see PDFBOX-2599
                     return codeToCID(code);
                 }
                 else if (unicode.length() > 1)
                 {
-                    LOG.warn("Trying to map multi-byte character using 'cmap', result will be poor");
                 }
                 
                 // a non-embedded font always has a cmap (otherwise FontMapper won't load it)

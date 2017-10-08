@@ -28,9 +28,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.contentstream.operator.MissingOperandException;
+import org.apache.pdfbox.contentstream.operator.Operator;
+import org.apache.pdfbox.contentstream.operator.OperatorProcessor;
 import org.apache.pdfbox.contentstream.operator.state.EmptyGraphicsStackException;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
@@ -48,6 +48,7 @@ import org.apache.pdfbox.pdmodel.font.PDFontFactory;
 import org.apache.pdfbox.pdmodel.font.PDType3CharProc;
 import org.apache.pdfbox.pdmodel.font.PDType3Font;
 import org.apache.pdfbox.pdmodel.graphics.PDLineDashPattern;
+import org.apache.pdfbox.pdmodel.graphics.blend.BlendMode;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
@@ -59,9 +60,6 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
 import org.apache.pdfbox.util.Matrix;
 import org.apache.pdfbox.util.Vector;
-import org.apache.pdfbox.contentstream.operator.Operator;
-import org.apache.pdfbox.contentstream.operator.OperatorProcessor;
-import org.apache.pdfbox.pdmodel.graphics.blend.BlendMode;
 
 /**
  * Processes a PDF content stream and executes certain operations.
@@ -69,9 +67,8 @@ import org.apache.pdfbox.pdmodel.graphics.blend.BlendMode;
  * 
  * @author Ben Litchfield
  */
-public abstract class PDFStreamEngine
+public class PDFStreamEngine
 {
-    private static final Log LOG = LogFactory.getLog(PDFStreamEngine.class);
 
     private final Map<String, OperatorProcessor> operators = new HashMap<>(80);
 
@@ -666,7 +663,6 @@ public abstract class PDFStreamEngine
         PDFont font = textState.getFont();
         if (font == null)
         {
-            LOG.warn("No current font, will use default");
             font = PDFontFactory.createDefaultFont();
         }
 
@@ -872,17 +868,14 @@ public abstract class PDFStreamEngine
             e instanceof MissingResourceException ||
             e instanceof MissingImageReaderException)
         {
-            LOG.error(e.getMessage());
         }
         else if (e instanceof EmptyGraphicsStackException)
         {
-            LOG.warn(e.getMessage());
         }
         else if (operator.getName().equals("Do"))
         {
             // todo: this too forgiving, but PDFBox has always worked this way for DrawObject
             //       some careful refactoring is needed
-            LOG.warn(e.getMessage());
         }
         else
         {
@@ -981,7 +974,6 @@ public abstract class PDFStreamEngine
     {
         if (phase < 0)
         {
-            LOG.warn("Dash phase has negative value " + phase + ", set to 0");
             phase = 0;
         }
         PDLineDashPattern lineDash = new PDLineDashPattern(array, phase);

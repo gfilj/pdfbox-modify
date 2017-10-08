@@ -23,8 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.io.ScratchFile;
 import org.apache.pdfbox.pdfparser.PDFObjectStreamParser;
 
@@ -41,7 +39,6 @@ public class COSDocument extends COSBase implements Closeable
     /**
      * Log instance.
      */
-    private static final Log LOG = LogFactory.getLog(COSDocument.class);
 
     private float version = 1.4f;
 
@@ -164,12 +161,10 @@ public class COSDocument extends COSBase implements Closeable
                     }
                     else if (typeItem != null)
                     {
-                        LOG.debug("Expected a /Name object after /Type, got '" + typeItem + "' instead");
                     }
                 }
                 catch (ClassCastException e)
                 {
-                    LOG.warn(e, e);
                 }
             }
         }
@@ -219,12 +214,10 @@ public class COSDocument extends COSBase implements Closeable
                     }
                     else if (typeItem != null)
                     {
-                        LOG.debug("Expected a /Name object after /Type, got '" + typeItem + "' instead");
                     }
                 }
                 catch (ClassCastException e)
                 {
-                    LOG.warn(e, e);
                 }
             }
         }
@@ -469,7 +462,6 @@ public class COSDocument extends COSBase implements Closeable
         {
             if (warnMissingClose) 
             {
-                LOG.warn( "Warning: You did not close a PDF Document" );
             }
             close();
         }
